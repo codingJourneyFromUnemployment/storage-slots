@@ -1,6 +1,6 @@
 const hre = require("hardhat");
 
-const addr = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+const addr = "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE"
 
 async function lookup() {
   // eth_getStorageAt
@@ -15,10 +15,13 @@ async function lookup() {
   // const value2 = await hre.ethers.provider.getStorage(addr, slot)
   // console.log(`Storage at ${addr} is ${value2}`);
 
-  const key = hre.ethers.toUtf8Bytes("beidi");
-  const slot = hre.ethers.keccak256(key)
-  const value = await hre.ethers.provider.getStorage(addr, slot)
-  console.log(`Storage at ${addr} is ${value}`);
+  // const key = hre.ethers.toUtf8Bytes("beidi");
+  // const slot = hre.ethers.keccak256(key)
+  // const value = await hre.ethers.provider.getStorage(addr, slot)
+  // console.log(`Storage at ${addr} is ${value}`);
+
+  const contract = await hre.ethers.getContractAt("Storage", addr);
+  await contract.check();
 }
 
 lookup();
