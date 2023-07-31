@@ -15,6 +15,11 @@ contract Proxy {
     implementation = _implementation;
   }
 
+  fallback() external {
+    (bool success,) =  implementation.call(msg.data);
+    require(success, "External call failed");
+  }
+
   function changeX(uint _x) external {
     Logic1(implementation).changeX(_x);
   }
@@ -40,4 +45,5 @@ contract Logic2 {
     x = x * 3;
   }
 }
+
 
