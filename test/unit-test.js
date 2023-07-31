@@ -46,18 +46,18 @@ describe("Proxy", function () {
     const proxyAddress = await proxy.getAddress();
 
     await proxy.changeImplementation(logic1Address);
-    assert.equal(await logic1.x(), 0);
+    assert.equal(await lookupUint(logic1Address, "0x0"), 0);
     await proxy.changeX(45);
-    assert.equal(await logic1.x(), 45);
+    assert.equal(await lookupUint(logic1Address, "0x0"), 45);
 
     await proxy.changeImplementation(logic2Address);
-    assert.equal(await logic2.x(), 0);
+    assert.equal(await lookupUint(logic2Address, "0x0"), 0);
     await proxy.changeX(11);
-    assert.equal(await logic2.x(), 11);
+    assert.equal(await lookupUint(logic2Address, "0x0"), 11);
 
     await proxyAsLogic2.changeX(25);
     await proxyAsLogic2.tripleX();
-    assert.equal(await logic2.x(), 75);
+    assert.equal(await lookupUint(logic2Address, "0x0"), 75);
 
   });
 
