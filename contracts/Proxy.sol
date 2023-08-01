@@ -9,15 +9,16 @@ import "hardhat/console.sol";
 // EOA -> Proxy -> Logic1
 //              -> Logic2
 contract Proxy {
-  uint x = 0;
-  address implementation;
+  // uint x = 0;
+  // address implementation;
 
   function changeImplementation(address _implementation) external {
-    implementation = _implementation;
+    // implementation = _implementation;
+    StorageSlot.getAddressSlot(keccak256("implementation")).value = _implementation;
   }
 
   fallback() external {
-    (bool success,) =  implementation.delegatecall(msg.data);
+    (bool success,) =  StorageSlot.getAddressSlot(keccak256("implementation")).value.delegatecall(msg.data);
     require(success, "External call failed");
   }
 
